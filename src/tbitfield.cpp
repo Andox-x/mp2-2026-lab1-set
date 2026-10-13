@@ -151,8 +151,8 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
   for (int i = 0; i < bf.BitLen; i++) bf.ClrBit(i);
   int j = 0;
   for ( int i = 0; i < bf.BitLen && j < s.size(); i++) {
-    if (s[i] == '0') {bf.ClrBit(j); j++;}
-    else if (s[i] == '1') {bf.SetBit(j); j++;}
+    if (s[j] == '0') {bf.ClrBit(j); j++;}
+    else if (s[j] == '1') {bf.SetBit(j); j++;}
   }
   return istr;
 }
