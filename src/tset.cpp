@@ -35,7 +35,7 @@ int TSet::GetMaxPower(void) const // получить макс. к-во эл-т�
 
 int TSet::IsMember(const int Elem) const // элемент множества?
 {
-    if (Elem < 0 || Elem >= MaxPower) throw std::out_of_range("element out of range");
+    if (Elem < 0 || Elem >= MaxPower) return 0;
     return BitField.GetBit(Elem);
 }
 
@@ -100,8 +100,8 @@ TSet TSet::operator-(const int Elem) // разность с элементом
 TSet TSet::operator*(const TSet &s) // пересечение
 {
     int resMaxPower = 0;
-    if (MaxPower > s.MaxPower) resMaxPower = s.MaxPower;
-    else resMaxPower = MaxPower;
+    if (MaxPower > s.MaxPower) resMaxPower = MaxPower;
+    else resMaxPower = s.MaxPower;
     TSet res(resMaxPower);
     res.BitField = BitField & s.BitField;
     return res;

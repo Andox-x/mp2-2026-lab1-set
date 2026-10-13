@@ -119,12 +119,15 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 
 TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 {
-  
   int resLen = 0;
-  if (BitLen < bf.BitLen) resLen = BitLen;
+  if (BitLen > bf.BitLen) resLen = BitLen;
   else resLen = bf.BitLen;
   TBitField res(resLen);
-  for (int i = 0; i < res.MemLen; i++) res.pMem[i] = pMem[i] & bf.pMem[i];
+
+  int minMemLen = 0;
+  if (MemLen < bf.MemLen) minMemLen = MemLen;
+  else minMemLen = bf.MemLen;
+  for (int i = 0; i < minMemLen; i++) res.pMem[i] = pMem[i] & bf.pMem[i];
 
   return res;
 }

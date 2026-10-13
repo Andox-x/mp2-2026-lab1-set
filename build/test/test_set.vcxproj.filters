@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_my_own.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_tbitfield.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -180,6 +180,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_main.cpp" />
+    <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_my_own.cpp" />
     <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_tbitfield.cpp" />
     <ClCompile Include="C:\Users\Администратор\source\mp2-2026-lab1-set\test\test_tset.cpp" />
   </ItemGroup>
