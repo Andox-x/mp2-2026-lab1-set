@@ -6,9 +6,12 @@
 // Битовое поле
 
 #include "tbitfield.h"
+#include <string> 
+#include <stdexcept> 
 
 TBitField::TBitField(int len)
 {
+  if (len < 0) throw std::invalid_argument("length cannot be less zero");
   BitLen = len;
   MemLen = (len + (int)sizeof(TELEM)*8 - 1)/(int)(sizeof(TELEM)*8);
   pMem = new TELEM[MemLen];
@@ -33,11 +36,13 @@ TBitField::~TBitField()
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
 {
+  if (n < 0 || n >= BitLen) throw std::out_of_range("index out of range");
   return n / (int)(sizeof(TELEM)*8);
 }
 
 TELEM TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
+  if (n < 0 || n >= BitLen) throw std::out_of_range("index out of range");
   return (TELEM)1 << (n % (int)(sizeof(TELEM)*8));
 }
 
@@ -50,16 +55,19 @@ int TBitField::GetLength(void) const // получить длину (к-во б�
 
 void TBitField::SetBit(const int n) // установить бит
 {
+  if (n < 0 || n >= BitLen) throw std::out_of_range("index out of range");
   pMem[GetMemIndex(n)] |= GetMemMask(n);
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
+  if (n < 0 || n >= BitLen) throw std::out_of_range("index out of range");
   pMem[GetMemIndex(n)] &= ~GetMemMask(n);
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
+  if (n < 0 || n >= BitLen) throw std::out_of_range("index out of range");
   return (pMem[GetMemIndex(n)] & GetMemMask(n)) && 1;
 }
 
@@ -67,12 +75,13 @@ int TBitField::GetBit(const int n) const // получить значение б
 
 TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 {
+  if (this == &bf) return *this;
   delete[] pMem;
   BitLen = bf.BitLen;
   MemLen = bf.MemLen;
   pMem = new TELEM[bf.MemLen];
   for (int i = 0; i < MemLen; i++) pMem[i] = bf.pMem[i];
-  return *this;
+  return *this; 
 }
 
 int TBitField::operator==(const TBitField &bf) const // сравнение
@@ -136,9 +145,11 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
   string s;
   istr >> s;
-  for ( int i = 0; i < bf.BitLen && i < s.size(); i++) {
-    if (s[i] == '0') bf.ClrBit(i);
-    if (s[i] == '1') bf.SetBit(i);
+  for (int i = 0; i < bf.BitLen; i++) bf.ClrBit(i);
+  int j = 0;
+  for ( int i = 0; i < bf.BitLen && j < s.size(); i++) {
+    if (s[i] == '0') {bf.ClrBit(j); j++;}
+    else if (s[i] == '1') {bf.SetBit(j); j++;}
   }
   return istr;
 }
